@@ -44,7 +44,6 @@ def run_set(set_file, visualize, verbose):
 			correct, num_runs = run_instance(os.path.join(path, instance), visualize=visualize, verbose=verbose)
 			correct_instances += correct
 			num_instances += num_runs
-			break
 
 	for i, name in enumerate(crossovers):
 		print(name + ":")
