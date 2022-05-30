@@ -74,11 +74,11 @@ class GeneticAlgorithm:
 			if( self.verbose ):
 				self.print_statistics()
 		except ValueToReachFoundException as exception:
-			if( self.print_final_results ):
+			if (self.verbose and self.print_final_results ):
 				print(exception)
 				print("Best fitness: {:.1f}, Nr._of_evaluations: {}".format(exception.individual.fitness, self.fitness.number_of_evaluations))
 			return exception.individual.fitness, self.fitness.number_of_evaluations
-		if( self.print_final_results ):
+		if (self.verbose and self.print_final_results ):
 			self.print_statistics()
 		return self.get_best_fitness(), self.fitness.number_of_evaluations
 

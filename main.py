@@ -6,6 +6,7 @@ import FitnessFunction
 
 crossovers = ["CustomCrossover", "UniformCrossover", "OnePointCrossover"]
 
+
 def run_instance(inst, visualize=False, verbose=False):
 	results_success = []
 	results_true = []
@@ -20,6 +21,7 @@ def run_instance(inst, visualize=False, verbose=False):
 				if visualize:
 					fitness.visualize()
 			genetic_algorithm = GeneticAlgorithm(fitness,population_size,variation=cx,evaluation_budget=100000,verbose=False)
+
 			best_fitness, num_evaluations = genetic_algorithm.run()
 			if best_fitness == fitness.value_to_reach:
 				num_success += 1
@@ -34,21 +36,26 @@ def run_instance(inst, visualize=False, verbose=False):
 											  percentiles[2]))
 	return results_success, results_true
 
+
 def run_set(set_file, visualize, verbose):
 	path = os.path.join("maxcut-instances", set_file)
 
-	correct_instances = []
-	num_instances = []
+	correct_instances = np.array([0,0,0])
+	num_instances = np.array([0,0,0])
+	counter = 1
 	for instance in os.listdir(path):
 		if instance.endswith(".txt"):
+			print(str(counter) + ") running instance: " + instance)
 			correct, num_runs = run_instance(os.path.join(path, instance), visualize=visualize, verbose=verbose)
-			correct_instances += correct
-			num_instances += num_runs
+			correct_instances += np.array(correct)
+			num_instances += np.array(num_runs)
+			counter += 1
 
+	print("Completed Evaluation of", set_file)
 	for i, name in enumerate(crossovers):
 		print(name + ":")
 		print("{}/{} runs successful".format(correct_instances[i], num_instances[i]))
 
 
 if __name__ == "__main__":
-	run_set("setD", visualize=False, verbose=False)
+	run_set("setE", visualize=False, verbose=False)
