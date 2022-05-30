@@ -121,7 +121,7 @@ class MaxCut(FitnessFunction):
 	def visualize(self):
 		pos = nx.spring_layout(self.G, seed=42)  # For better example looking
 		nx.draw(self.G, pos)
-		labels = [self.G.edges[e]['weight'] for e in self.G.edges]
+		labels = [1-1/self.G.edges[e]['weight'] for e in self.G.edges]
 		nx.draw_networkx_edges(self.G, pos, width=labels)
 
 		plt.show()
