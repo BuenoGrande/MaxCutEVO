@@ -4,7 +4,8 @@ import os
 from GeneticAlgorithm import GeneticAlgorithm
 import FitnessFunction
 
-crossovers = ["CustomCrossover", "UniformCrossover", "OnePointCrossover"]
+#crossovers = ["CustomCrossover", "UniformCrossover", "OnePointCrossover"]
+crossovers = ["UniformCrossover", "OnePointCrossover"]
 
 
 def run_instance(inst, visualize=False, verbose=False):
@@ -45,10 +46,12 @@ def run_set(set_file, visualize, verbose):
 	counter = 1
 	for instance in os.listdir(path):
 		if instance.endswith(".txt"):
-			print(str(counter) + ") running instance: " + instance)
 			correct, num_runs = run_instance(os.path.join(path, instance), visualize=visualize, verbose=verbose)
 			correct_instances += np.array(correct)
 			num_instances += np.array(num_runs)
+			print(str(counter) + ") running instance: " + instance)
+			for i, name in enumerate(crossovers):
+				print("{}/{} runs successful".format(correct_instances[i], num_instances[i]))
 			counter += 1
 
 	print("Completed Evaluation of", set_file)
@@ -58,4 +61,4 @@ def run_set(set_file, visualize, verbose):
 
 
 if __name__ == "__main__":
-	run_set("setE", visualize=False, verbose=False)
+	run_set("setD", visualize=False, verbose=False)
