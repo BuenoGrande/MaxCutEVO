@@ -3,6 +3,7 @@ import os
 
 from GeneticAlgorithm import GeneticAlgorithm
 import FitnessFunction
+import multiprocessing
 
 #crossovers = ["CustomCrossover", "UniformCrossover", "OnePointCrossover"]
 crossovers = ["UniformCrossover", "OnePointCrossover"]
@@ -44,21 +45,35 @@ def run_set(set_file, visualize, verbose):
 	correct_instances = np.array([0,0,0])
 	num_instances = np.array([0,0,0])
 	counter = 1
+
+	list_files = []
 	for instance in os.listdir(path):
 		if instance.endswith(".txt"):
-			correct, num_runs = run_instance(os.path.join(path, instance), visualize=visualize, verbose=verbose)
-			correct_instances += np.array(correct)
-			num_instances += np.array(num_runs)
-			print(str(counter) + ") running instance: " + instance)
-			for i, name in enumerate(crossovers):
-				print("{}/{} runs successful".format(correct_instances[i], num_instances[i]))
-			counter += 1
+			list_files.append(os.path.join(path, instance))
+			
+	# Multiprocessing the running of files
+	pool = multiprocessing.Pool()
+	processes = [pool.apply_async(run_instance_helper, args=(file, visualize, verbose)) for file in list_files]
+	result = [p.get() for p in processes]
+
+	for true, runs in result:
+		correct_instances += np.array(true)
+		num_instances += np.array(runs)
 
 	print("Completed Evaluation of", set_file)
 	for i, name in enumerate(crossovers):
 		print(name + ":")
 		print("{}/{} runs successful".format(correct_instances[i], num_instances[i]))
 
+def run_instance_helper(path_to_txt, visualize, verbose):
+	correct, num_runs = run_instance(path_to_txt, visualize=visualize, verbose=verbose)
+	print(f"running instance: {path_to_txt}")
+	print("{}/{} runs successful".format(correct, num_runs))
+	return correct, num_runs
 
 if __name__ == "__main__":
-	run_set("setD", visualize=False, verbose=False)
+	print("Starting everything!")
+	run_set("setX", visualize=False, verbose=False)
+
+	#correct, num_runs = run_instance("maxcut-instances/setE/n0000020i00.txt", visualize=False, verbose=True)
+	#print("{}/{} runs successful".format(correct, num_runs))
