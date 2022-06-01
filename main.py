@@ -22,11 +22,11 @@ def run_instance(inst, visualize=False, verbose=False):
 				fitness = FitnessFunction.MaxCut(inst)
 				if visualize:
 					fitness.visualize()
-			genetic_algorithm = GeneticAlgorithm(fitness,population_size,variation=cx,evaluation_budget=100000,verbose=False)
+				genetic_algorithm = GeneticAlgorithm(fitness,population_size,variation=cx,evaluation_budget=100000,verbose=False)
 
-			best_fitness, num_evaluations = genetic_algorithm.run()
-			if best_fitness == fitness.value_to_reach:
-				num_success += 1
+				best_fitness, num_evaluations = genetic_algorithm.run()
+				if best_fitness == fitness.value_to_reach:
+					num_success += 1
 			num_evaluations_list.append(num_evaluations)
 			results_success.append(num_success)
 			results_true.append(num_runs)
@@ -42,15 +42,15 @@ def run_instance(inst, visualize=False, verbose=False):
 def run_set(set_file, visualize, verbose):
 	path = os.path.join("maxcut-instances", set_file)
 
-	correct_instances = np.array([0,0,0])
-	num_instances = np.array([0,0,0])
+	correct_instances = np.array(np.zeros(len(crossovers)))
+	num_instances = np.array(np.zeros(len(crossovers)))
 	counter = 1
 
 	list_files = []
 	for instance in os.listdir(path):
 		if instance.endswith(".txt"):
 			list_files.append(os.path.join(path, instance))
-			
+
 	# Multiprocessing the running of files
 	pool = multiprocessing.Pool()
 	processes = [pool.apply_async(run_instance_helper, args=(file, visualize, verbose)) for file in list_files]
@@ -74,6 +74,5 @@ def run_instance_helper(path_to_txt, visualize, verbose):
 if __name__ == "__main__":
 	print("Starting everything!")
 	run_set("setX", visualize=False, verbose=False)
-
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000020i00.txt", visualize=False, verbose=True)
 	#print("{}/{} runs successful".format(correct, num_runs))
