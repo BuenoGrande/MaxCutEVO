@@ -17,6 +17,7 @@ class FitnessFunction:
 		if individual.fitness >= self.value_to_reach:
 			raise ValueToReachFoundException(individual)
 
+
 class OneMax(FitnessFunction):
 	def __init__( self, dimensionality ):
 		super().__init__()
@@ -121,7 +122,48 @@ class MaxCut(FitnessFunction):
 	def visualize(self):
 		pos = nx.spring_layout(self.G, seed=42)  # For better example looking
 		nx.draw(self.G, pos)
-		labels = [1-1/self.G.edges[e]['weight'] for e in self.G.edges]
+		labels = [self.G.edges[e]['weight'] for e in self.G.edges]
 		nx.draw_networkx_edges(self.G, pos, width=labels)
 
 		plt.show()
+
+	def visualize_individual(self, individual):
+		pos = nx.spring_layout(self.G, seed=42)  # For better example looking
+		nx.draw(self.G, pos, node_color=individual.genotype[self.G.nodes], with_labels=True)
+		labels = [self.G.edges[e]['weight'] for e in self.G.edges]
+		nx.draw_networkx_edges(self.G, pos, width=labels)
+
+		plt.show()
+
+	def compute_node_potential(self, individual: Individual):
+		results = np.zeros(len(individual.genotype))
+		for e in self.edge_list:
+			v0, v1 = e
+			w = self.weights[e]
+			sign = -1 if individual.genotype[v0] != individual.genotype[v1] else 1
+			results[v0] += sign * w
+			results[v1] += sign * w
+		return results
+
+	def choose_best_individuals(self, individual_a: Individual, individual_b: Individual):
+		# potential is large if a node switch would benefit the edge cut for a
+		potential_a = self.compute_node_potential(individual_a)
+		potential_b = self.compute_node_potential(individual_b)
+
+		# TODO add random
+		# TODO add depth
+
+		# A & B ## TODO check inverse
+		if np.median(potential_a) > np.median(potential_b):
+			return potential_a > 0
+		else:
+			return potential_b < 0
+
+		## only A
+		#return potential_a > 0
+
+
+
+
+
+
