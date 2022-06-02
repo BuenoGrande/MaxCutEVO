@@ -206,7 +206,9 @@ class MaxCut(FitnessFunction):
 				if np.random.random() < 0.9:
 					out[cluster] = True
 				else:
-					out[cluster] = np.random.choice([0,1], len(cluster), p=[0.2, 0.8])
+					out[cluster] = np.random.choice([0, 1], len(cluster), p=[0.1, 0.9])
+			else:
+				out[cluster] = np.random.choice([0, 1], len(cluster), p=[0.9, 0.1])
 		return out
 
 	def evaluate_cluster(self, cluster, individual):
