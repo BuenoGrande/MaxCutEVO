@@ -40,7 +40,8 @@ def two_point_crossover(individual_a: Individual, individual_b: Individual ):
 
     return [offspring_a, offspring_b]
 
-def custom_crossover( fitness: FitnessFunction, individual_a: Individual, individual_b: Individual ):
+
+def custom_crossover_potential( fitness: FitnessFunction, individual_a: Individual, individual_b: Individual ):
     assert len(individual_a.genotype) == len(individual_b.genotype), "solutions should be equal in size"
     l = len(individual_a.genotype)
     offspring_a = Individual(l)
@@ -48,7 +49,20 @@ def custom_crossover( fitness: FitnessFunction, individual_a: Individual, indivi
 
     m = fitness.choose_best_individuals(individual_a, individual_b)
 
-    #m = (np.arange(l) == switched_node)
+    # Implement your custom crossover here
+    offspring_a.genotype = np.where(m, individual_b.genotype, individual_a.genotype)
+    offspring_b.genotype = np.where(m, individual_b.genotype, individual_a.genotype)
+
+    return [offspring_a, offspring_b]
+
+
+def custom_crossover_cluster( fitness: FitnessFunction, individual_a: Individual, individual_b: Individual ):
+    assert len(individual_a.genotype) == len(individual_b.genotype), "solutions should be equal in size"
+    l = len(individual_a.genotype)
+    offspring_a = Individual(l)
+    offspring_b = Individual(l)
+
+    m = fitness.choose_best_cluster(individual_a, individual_b)
 
     # Implement your custom crossover here
     offspring_a.genotype = np.where(m, individual_b.genotype, individual_a.genotype)

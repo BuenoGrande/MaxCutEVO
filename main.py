@@ -5,7 +5,7 @@ from GeneticAlgorithm import GeneticAlgorithm
 import FitnessFunction
 import multiprocessing
 
-crossovers = ["CustomCrossover"]#,"UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
+crossovers = ["CustomCrossoverCluster"]#,"CustomCrossoverPotential", "UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
 
 
 def run_instance(inst, visualize=False, verbose=False):
@@ -71,7 +71,10 @@ def run_instance_helper(path_to_txt, visualize, verbose):
 
 if __name__ == "__main__":
 	print("Starting everything!")
-	run_set("setE", visualize=False, verbose=False)
+	run_set("setD", visualize=False, verbose=False)
 
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000020i00.txt", visualize=False, verbose=True)
+	#correct, num_runs = run_instance("maxcut-instances/setE/n0000040i00.txt", visualize=False, verbose=True)
+	#correct, num_runs = run_instance("maxcut-instances/setE/n0000080i00.txt", visualize=False, verbose=True)
+	#correct, num_runs = run_instance("maxcut-instances/setE/n0000160i00.txt", visualize=False, verbose=True)
 	#print("{}/{} runs successful".format(correct, num_runs))

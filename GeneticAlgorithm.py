@@ -33,8 +33,10 @@ class GeneticAlgorithm:
 				self.variation_operator = Variation.one_point_crossover
 			elif options["variation"] == "TwoPointCrossover":
 				self.variation_operator = Variation.two_point_crossover
-			elif options["variation"] == "CustomCrossover":
-				self.variation_operator = partial(Variation.custom_crossover, self.fitness)
+			elif options["variation"] == "CustomCrossoverPotential":
+				self.variation_operator = partial(Variation.custom_crossover_potential, self.fitness)
+			elif options["variation"] == "CustomCrossoverCluster":
+				self.variation_operator = partial(Variation.custom_crossover_cluster, self.fitness)
 
 	def initialize_population( self ):
 		self.population = [Individual.initialize_uniform_at_random(self.fitness.dimensionality) for i in range(self.population_size)]

@@ -2,6 +2,7 @@ import numpy as np
 import itertools as it
 import networkx as nx
 import matplotlib.pyplot as plt
+from collections import Counter
 
 import Individual
 from Utils import ValueToReachFoundException
@@ -60,10 +61,10 @@ class MaxCut(FitnessFunction):
 		self.weights = {}
 		self.adjacency_list = {}
 		self.G = nx.Graph()
+		self.clusters = []
 		self.read_problem_instance(instance_file)
 		self.read_value_to_reach(instance_file)
 		self.preprocess()
-
 
 	def preprocess( self ):
 		pass
@@ -106,7 +107,7 @@ class MaxCut(FitnessFunction):
 		return self.weights[(v0,v1)]
 
 	def get_degree( self, v ):
-		return len(adjacency_list(v))
+		return len(self.adjacency_list[v])
 
 	def evaluate( self, individual: Individual ):
 		result = 0
@@ -121,7 +122,7 @@ class MaxCut(FitnessFunction):
 
 	def visualize(self):
 		pos = nx.spring_layout(self.G, seed=42)  # For better example looking
-		nx.draw(self.G, pos)
+		nx.draw(self.G, pos, with_labels=True)
 		labels = [self.G.edges[e]['weight'] for e in self.G.edges]
 		nx.draw_networkx_edges(self.G, pos, width=labels)
 
@@ -146,21 +147,80 @@ class MaxCut(FitnessFunction):
 		return results
 
 	def choose_best_individuals(self, individual_a: Individual, individual_b: Individual):
-		# potential is large if a node switch would benefit the edge cut for a
-		potential_a = self.compute_node_potential(individual_a)
-		potential_b = self.compute_node_potential(individual_b)
-
-		# TODO add random
-		# TODO add depth
-
-		# A & B ## TODO check inverse
-		if np.median(potential_a) > np.median(potential_b):
-			return potential_a > 0
+		if np.random.random() < 0.1:
+			k = [np.random.random() < 0.3 for _ in individual_a.genotype]
 		else:
-			return potential_b < 0
+			k = [False for _ in individual_a.genotype]
 
-		## only A
-		#return potential_a > 0
+		# potential is large if a node switch would improve the max-cut
+		potential_a = self.compute_node_potential(individual_a)
+
+		return np.array(k) ^ (self.get_non_interfering_nodes(potential_a, individual_a, individual_b) == 1)
+
+	def get_non_interfering_nodes(self, potential, individual_a, individual_b):
+		out = np.ones(potential.shape)*-1
+		potential_nodes = np.argsort(potential)
+		for idx in reversed(potential_nodes):
+			if out[idx] == -1 and \
+					potential[idx] > 0 and \
+					individual_a.genotype[idx] != individual_b.genotype[idx]:
+				out[idx] = 1
+				for neighboring_idx in self.adjacency_list[idx]:
+					out[neighboring_idx] = 0
+			else:
+				out[idx] = 0
+		return out
+
+	def choose_best_cluster(self, individual_a: Individual, individual_b: Individual):
+		if not self.clusters:
+			self.compute_clusters()
+
+		#if np.random.random() < 0.1:
+		#	k = [np.random.random() < 0.3 for _ in individual_a.genotype]
+		#else:
+		k = [False for _ in individual_a.genotype]
+
+		return k ^ (self.evaluate_clusters(individual_a, individual_b) == 1)
+
+	def compute_clusters(self):
+		l = len(self.G.nodes)
+		visited = np.zeros(l)
+
+		for v0 in range(l):
+			if not visited[v0]:
+				neighborhood = [v0] + self.adjacency_list[v0]
+				for v1 in self.adjacency_list[v0]:
+					neighborhood += self.adjacency_list[v1]
+
+				counter = Counter(neighborhood)
+				cluster = []
+				[cluster.append(v) for v in neighborhood if counter[v] != 1 and v not in cluster]
+
+				assert len(cluster) == 5
+				for v in cluster:
+					visited[v] = 1
+				self.clusters.append(cluster)
+
+	def evaluate_clusters(self, individual_a, individual_b):
+		out = np.zeros(len(individual_a.genotype))
+		for cluster in self.clusters:
+			if (individual_a.genotype[cluster] == individual_b.genotype[cluster]).all():
+				continue
+
+			if self.evaluate_cluster(cluster, individual_b) > self.evaluate_cluster(cluster, individual_a):
+				if np.random.random() < 0.9:
+					out[cluster] = True
+				else:
+					out[cluster] = np.random.choice([0,1], len(cluster), p=[0.2, 0.8])
+		return out
+
+	def evaluate_cluster(self, cluster, individual):
+		out = 0
+		for i in range(len(cluster)-1):
+			for j in range(i+1, len(cluster)):
+				if individual.genotype[cluster[i]] != individual.genotype[cluster[j]]:
+					out += self.get_weight(cluster[i], cluster[j])
+		return out
 
 
 
