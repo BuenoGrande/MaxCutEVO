@@ -175,12 +175,7 @@ class MaxCut(FitnessFunction):
 		if not self.clusters:
 			self.compute_clusters()
 
-		#if np.random.random() < 0.1:
-		#	k = [np.random.random() < 0.3 for _ in individual_a.genotype]
-		#else:
-		k = [False for _ in individual_a.genotype]
-
-		return k ^ (self.evaluate_clusters(individual_a, individual_b) == 1)
+		return self.evaluate_clusters(individual_a, individual_b)
 
 	def compute_clusters(self):
 		l = len(self.G.nodes)
@@ -221,9 +216,3 @@ class MaxCut(FitnessFunction):
 				if individual.genotype[cluster[i]] != individual.genotype[cluster[j]]:
 					out += self.get_weight(cluster[i], cluster[j])
 		return out
-
-
-
-
-
-
