@@ -1,0 +1,109 @@
+[Running] python -u "/Users/pierrebongrand/The FILE/CODE/MaxCutEVO/main.py"
+Starting Set D!
+running instance: maxcut-instances/setD/n0000010i04.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i07.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i06.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i00.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i05.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i02.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i04.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i07.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i01.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i01.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i03.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i06.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i05.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i00.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i02.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i03.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i09.txt
+[30, 27]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i08.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i03.txt
+[30, 27]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i00.txt
+[30, 27]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000010i09.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i08.txt
+[30, 23]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i05.txt
+[30, 20]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i02.txt
+[30, 11]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i06.txt
+[30, 21]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i01.txt
+[30, 12]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i04.txt
+[30, 16]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000040i07.txt
+[30, 22]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i05.txt
+[22, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i01.txt
+[20, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i07.txt
+[15, 1]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i00.txt
+[16, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i03.txt
+[16, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i08.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000020i09.txt
+[30, 30]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i06.txt
+[11, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i02.txt
+[11, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i04.txt
+[6, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i08.txt
+[8, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000080i09.txt
+[17, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i08.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i09.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i04.txt
+[1, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i05.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i06.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i07.txt
+[1, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i03.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i02.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i00.txt
+[0, 0]/[30, 30] runs successful
+running instance: maxcut-instances/setD/n0000160i01.txt
+[0, 0]/[30, 30] runs successful
+Completed Evaluation of setD
+CustomCrossoverCluster:
+1044.0/1500.0 runs successful
+CustomCrossoverPotential:
+807.0/1500.0 runs successful
+
+[Done] exited with code=0 in 4338.249 seconds
