@@ -38,8 +38,8 @@ def run_instance(inst, visualize=False, verbose=False):
 	return results_success, results_true
 
 
-def run_set(set_file, visualize, verbose):
-	path = os.path.join("maxcut-instances", set_file)
+def run_set(set_file, instance_size, visualize, verbose):
+	path = os.path.join("maxcut-instances", set_file+ "/"+ instance_size)
 
 	correct_instances = np.array(np.zeros(len(crossovers)))
 	num_instances = np.array(np.zeros(len(crossovers)))
@@ -58,7 +58,7 @@ def run_set(set_file, visualize, verbose):
 		correct_instances += np.array(true)
 		num_instances += np.array(runs)
 
-	print("Completed Evaluation of", set_file)
+	print("Completed Evaluation of", set_file, "with", instance_size, "vertices!")
 	for i, name in enumerate(crossovers):
 		print(name + ":")
 		print("{}/{} runs successful".format(correct_instances[i], num_instances[i]))
@@ -70,8 +70,15 @@ def run_instance_helper(path_to_txt, visualize, verbose):
 	return correct, num_runs
 
 if __name__ == "__main__":
-	print("Starting Set D!")
-	run_set("setD", visualize=False, verbose=False)
+	#Note: Simply modify set and instance_size when experimenting
+	set='setD'
+	instance_size="10"
+	
+	#instance_set_C=["6","12","25","50","100","200"]
+	#instance_set_D=["10","20","40","80","160"]
+
+	print("Starting Set", set, "with:", instance_size, "vertices")
+	run_set(set,instance_size, visualize=False, verbose=False)
 
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000020i00.txt", visualize=False, verbose=True)
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000040i00.txt", visualize=False, verbose=True)
