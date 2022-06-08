@@ -5,8 +5,14 @@ from GeneticAlgorithm import GeneticAlgorithm
 import FitnessFunction
 import multiprocessing
 
-crossovers = ["CustomCrossoverCluster"]#, "CustomCrossoverPotential", "UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
+crossovers = ["CustomCrossoverCluster", "CustomCrossoverPotential", "UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
 
+sets=['setA','setB','setC','setD','setE']
+
+instance_set_A=["6","12","25","50","100"]
+instance_set_B=["9","16","25","49","100","196","400","784","1600"]
+instance_set_C=["6","12","25","50","100","200"]
+instance_set_DE=["10","20","40","80","160"]
 
 def run_instance(inst, visualize=False, verbose=False):
 	results_success = []
@@ -65,20 +71,29 @@ def run_set(set_file, instance_size, visualize, verbose):
 
 def run_instance_helper(path_to_txt, visualize, verbose):
 	correct, num_runs = run_instance(path_to_txt, visualize=visualize, verbose=verbose)
-	print(f"running instance: {path_to_txt}")
-	print("{}/{} runs successful".format(correct, num_runs))
+	#print(f"running instance: {path_to_txt}")
+	#print("{}/{} runs successful".format(correct, num_runs))
 	return correct, num_runs
 
 if __name__ == "__main__":
-	#Note: Simply modify set and instance_size when experimenting
-	set='setD'
-	instance_size="10"
+	#Note: Simply modify set when experimenting
+	set="setD"
+	
+	if set=="setA":
+		for instance_set in instance_set_A:
+			run_set(set, instance_size=instance_set, visualize=False, verbose=False)
 
-	#instance_set_C=["6","12","25","50","100","200"]
-	#instance_set_D=["10","20","40","80","160"]
+	if set=="setB":
+		for instance_set in instance_set_B:
+			run_set(set, instance_size=instance_set, visualize=False, verbose=False)
 
-	#print("Starting Set E!")
-	#run_set("setE", visualize=False, verbose=False)
+	if set=="setC":
+		for instance_set in instance_set_C:
+			run_set(set, instance_size=instance_set, visualize=False, verbose=False)
+
+	if set=="setD" or set=="setE":
+		for instance_set in instance_set_DE:
+			run_set(set, instance_size=instance_set, visualize=False, verbose=False)
 
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000020i00.txt", visualize=False, verbose=True)
 	#correct, num_runs = run_instance("maxcut-instances/setE/n0000040i00.txt", visualize=False, verbose=True)
