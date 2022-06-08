@@ -202,7 +202,9 @@ class MaxCut(FitnessFunction):
 			if (individual_a.genotype[cluster] == individual_b.genotype[cluster]).all():
 				continue
 
-			if self.evaluate_cluster(cluster, individual_b) > self.evaluate_cluster(cluster, individual_a):
+			#if self.evaluate_cluster(cluster, individual_b) > self.evaluate_cluster(cluster, individual_a):
+			if self.evaluate_cluster_neighboring(cluster, individual_b, individual_a, out) > \
+					self.evaluate_cluster_neighboring(cluster, individual_a, individual_b, out):
 				if np.random.random() < 0.9:
 					out[cluster] = True
 				else:
@@ -213,8 +215,19 @@ class MaxCut(FitnessFunction):
 
 	def evaluate_cluster(self, cluster, individual):
 		out = 0
-		for i in range(len(cluster)-1):
-			for j in range(i+1, len(cluster)):
+		for i in range(len(cluster)):
+			for j in range(i, len(cluster)):
 				if individual.genotype[cluster[i]] != individual.genotype[cluster[j]]:
 					out += self.get_weight(cluster[i], cluster[j])
+		return out
+
+	def evaluate_cluster_neighboring(self, cluster, individual_src, individual_dst, swap):
+		out = 0
+		for v0 in cluster:
+			for v1 in self.adjacency_list[v0]:
+				n1 = individual_src.genotype[v0]#individual_dst.genotype[v0] if swap[v0] else individual_src.genotype[v0]
+				n2 = individual_src.genotype[v1]#individual_dst.genotype[v1] if swap[v1] else individual_src.genotype[v1]
+				if n1 != n2:
+					neighboring_edge = 1 if v1 in cluster else 0.5
+					out += neighboring_edge * self.get_weight(v0, v1)
 		return out
