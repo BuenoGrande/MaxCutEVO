@@ -137,6 +137,7 @@ class MaxCut(FitnessFunction):
 		plt.show()
 
 	def compute_node_potential(self, individual: Individual):
+		self.number_of_evaluations += 1
 		results = np.zeros(len(individual.genotype))
 		for e in self.edge_list:
 			v0, v1 = e
@@ -223,6 +224,7 @@ class MaxCut(FitnessFunction):
 
 	def evaluate_cluster_neighboring(self, cluster, individual_src, individual_dst, swap):
 		out = 0
+		self.number_of_evaluations += 1
 		for v0 in cluster:
 			for v1 in self.adjacency_list[v0]:
 				n1 = individual_src.genotype[v0]#individual_dst.genotype[v0] if swap[v0] else individual_src.genotype[v0]

@@ -5,7 +5,7 @@ from GeneticAlgorithm import GeneticAlgorithm
 import FitnessFunction
 import multiprocessing
 
-crossovers = ["CustomCrossoverCluster", "CustomCrossoverPotential", "UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
+crossovers = ["CustomCrossoverPotential","CustomCrossoverCluster", "UniformCrossover", "OnePointCrossover", "TwoPointCrossover"]
 
 sets=['setA','setB','setC','setD','setE']
 
